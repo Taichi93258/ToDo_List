@@ -14,4 +14,21 @@ class TodolistFormController extends Controller
             "posts" => $posts
         ]);
     }
+
+    public function createPage()
+    {
+        return view('todo_create');
+    }
+
+    public function create(Request $request)
+    {
+        $post = new Post();
+        $post->task_name = $request->task_name;
+        $post->task_description = $request->task_description;
+        $post->assign_person_name = $request->assign_person_name;
+        $post->estimate_hour = $request->estimate_hour;
+        $post->save();
+
+        return redirect('/');
+    }
 }
