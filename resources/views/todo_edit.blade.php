@@ -3,6 +3,13 @@
     <h2>タスクの修正</h2>
     <form method="POST" action="/edit">
         @csrf
+        @if ($errors->any())
+            <ul>
+            @foreach ($errors->all() as $error)
+               <li style="color:red">{{$error}}</li>
+            @endforeach
+            </ul>
+        @endif
         <input type="hidden" name="id" value="{{$post->id}}">
         <p>
             タスクの名前：<input type="text" name="task_name" value="{{$post->task_name}}">
