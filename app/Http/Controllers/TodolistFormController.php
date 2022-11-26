@@ -10,8 +10,15 @@ class TodolistFormController extends Controller
     public function index()
     {
         $posts = Post::orderBy('id', 'asc')->get();
+
+        $estimate_hour_sum = 0;
+        foreach ($posts as $post) {
+            $estimate_hour_sum += $post->estimate_hour;
+        }
+
         return view('todo_list', [
-            "posts" => $posts
+            "posts" => $posts,
+            "estimate_hour_sum" => $estimate_hour_sum
         ]);
     }
 

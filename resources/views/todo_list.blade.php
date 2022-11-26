@@ -21,4 +21,7 @@
         </tr>
         @endforeach
     </table>
+    <p>
+        見積時間の合計(h):{{$estimate_hour_sum}}
+    </p>
 </div>
