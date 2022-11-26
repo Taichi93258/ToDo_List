@@ -31,4 +31,23 @@ class TodolistFormController extends Controller
 
         return redirect('/');
     }
+
+    public function editPage($id)
+    {
+        $post = Post::find($id);
+        return view('todo_edit', [
+            "post" => $post
+        ]);
+    }
+
+    public function edit(Request $request)
+    {
+        Post::find($request->id)->update([
+            'task_name' => $request->task_name,
+            'task_description' => $request->task_description,
+            'assign_person_name' => $request->assign_person_name,
+            'estimate_hour' => $request->estimate_hour
+        ]);
+        return redirect('/');
+    }
 }
