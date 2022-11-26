@@ -29,6 +29,13 @@ class TodolistFormController extends Controller
 
     public function create(Request $request)
     {
+        $validator = $request->validate([
+            'task_name' => 'required',
+            'task_description' => 'required',
+            'assign_person_name' => 'required',
+            'estimate_hour' => 'required'
+        ]);
+
         $post = new Post();
         $post->task_name = $request->task_name;
         $post->task_description = $request->task_description;
@@ -49,6 +56,13 @@ class TodolistFormController extends Controller
 
     public function edit(Request $request)
     {
+        $validator = $request->validate([
+            'task_name' => 'required',
+            'task_description' => 'required',
+            'assign_person_name' => 'required',
+            'estimate_hour' => 'required'
+        ]);
+
         Post::find($request->id)->update([
             'task_name' => $request->task_name,
             'task_description' => $request->task_description,
