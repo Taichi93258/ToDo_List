@@ -50,4 +50,18 @@ class TodolistFormController extends Controller
         ]);
         return redirect('/');
     }
+
+    public function deletePage($id)
+    {
+        $post = Post::find($id);
+        return view('todo_delete', [
+            "post" => $post
+        ]);
+    }
+
+    public function delete(Request $request)
+    {
+        Post::find($request->id)->delete();
+        return redirect('/');
+    }
 }
