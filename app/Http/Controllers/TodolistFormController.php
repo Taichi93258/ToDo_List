@@ -30,9 +30,9 @@ class TodolistFormController extends Controller
     public function create(Request $request)
     {
         $validator = $request->validate([
-            'task_name' => 'required',
+            'task_name' => 'required|max:20',
             'task_description' => 'required',
-            'assign_person_name' => 'required',
+            'assign_person_name' => 'required|max:20',
             'estimate_hour' => 'required'
         ]);
 
@@ -43,7 +43,17 @@ class TodolistFormController extends Controller
         $post->estimate_hour = $request->estimate_hour;
         $post->save();
 
-        return redirect('/');
+        $posts = Post::orderBy('id', 'asc')->get();
+
+        $estimate_hour_sum = 0;
+        foreach ($posts as $post) {
+            $estimate_hour_sum += $post->estimate_hour;
+        }
+
+        return view('todo_list', [
+            "posts" => $posts,
+            "estimate_hour_sum" => $estimate_hour_sum
+        ]);
     }
 
     public function editPage($id)
@@ -57,9 +67,9 @@ class TodolistFormController extends Controller
     public function edit(Request $request)
     {
         $validator = $request->validate([
-            'task_name' => 'required',
+            'task_name' => 'required|max:20',
             'task_description' => 'required',
-            'assign_person_name' => 'required',
+            'assign_person_name' => 'required|max:20',
             'estimate_hour' => 'required'
         ]);
 
@@ -69,7 +79,18 @@ class TodolistFormController extends Controller
             'assign_person_name' => $request->assign_person_name,
             'estimate_hour' => $request->estimate_hour
         ]);
-        return redirect('/');
+
+        $posts = Post::orderBy('id', 'asc')->get();
+
+        $estimate_hour_sum = 0;
+        foreach ($posts as $post) {
+            $estimate_hour_sum += $post->estimate_hour;
+        }
+
+        return view('todo_list', [
+            "posts" => $posts,
+            "estimate_hour_sum" => $estimate_hour_sum
+        ]);
     }
 
     public function deletePage($id)
@@ -83,6 +104,16 @@ class TodolistFormController extends Controller
     public function delete(Request $request)
     {
         Post::find($request->id)->delete();
-        return redirect('/');
+        $posts = Post::orderBy('id', 'asc')->get();
+
+        $estimate_hour_sum = 0;
+        foreach ($posts as $post) {
+            $estimate_hour_sum += $post->estimate_hour;
+        }
+
+        return view('todo_list', [
+            "posts" => $posts,
+            "estimate_hour_sum" => $estimate_hour_sum
+    ]);
     }
 }
