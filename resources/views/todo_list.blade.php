@@ -25,6 +25,7 @@
             <th>タスクの説明</th>
             <th>担当者の名前</th>
             <th>見積時間(h)</th>
+            <th>投稿時間</th>
             <th colspan="2">操作</th>
         </tr>
 
@@ -35,6 +36,7 @@
             <td>{{$post->task_description}}</td>
             <td>{{$post->assign_person_name}}</td>
             <td>{{$post->estimate_hour}}</td>
+            <td>{{$post->created_at}}</td>
             <td><a href="/edit-page/{{$post->id}}">編集</a></td>
             <td><a href="/delete-page/{{$post->id}}">削除</a></td>
         </tr>
