@@ -25,5 +25,5 @@
          </p>
          <input type="submit" name="edit" value="修正">
      </form>
-     <a href="/">戻る</a>
+     <a href="/todo_list">戻る</a>
  </div>
