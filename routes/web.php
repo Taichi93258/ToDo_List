@@ -34,7 +34,7 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-Route::get('/todo_list', [TodolistFormController::class, 'index']);
+Route::get('/todo_list', [TodolistFormController::class, 'index'])->name('todo_list');
 Route::get('/create-page', [TodolistFormController::class, 'createPage']);
 Route::post('/create', [TodolistFormController::class, 'create']);
 Route::get('/edit-page/{id}', [TodolistFormController::class, 'editPage']);
