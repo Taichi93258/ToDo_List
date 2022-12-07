@@ -18,10 +18,6 @@ use App\Http\Controllers\TodolistFormController;
 |
 */
 
-Route::get('/', function () {
-    return view('todo_list');
-});
-
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -34,6 +30,7 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
+Route::get('/', [TodolistFormController::class, 'index'])->name('todolist.index');
 Route::get('/todo_list', [TodolistFormController::class, 'index'])->name('todo_list');
 Route::get('/create-page', [TodolistFormController::class, 'createPage']);
 Route::post('/create', [TodolistFormController::class, 'create']);

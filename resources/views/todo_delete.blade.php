@@ -17,5 +17,5 @@
         <p>
         <input type="submit" name="delete" value="削除">
     </form>
-    <a href="/">戻る</a>
+    <a href="/todo_list">戻る</a>
 </div>
