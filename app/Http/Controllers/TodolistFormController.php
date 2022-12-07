@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PostRequest;
 use Illuminate\Http\Request;
 use App\Models\Post;
 
@@ -16,10 +17,7 @@ class TodolistFormController extends Controller
             $estimate_hour_sum += $post->estimate_hour;
         }
 
-        return view('todo_list', [
-            "posts" => $posts,
-            "estimate_hour_sum" => $estimate_hour_sum
-        ]);
+        return view('todo_list', compact('posts', 'estimate_hour_sum'));
     }
 
     public function createPage()
@@ -27,93 +25,37 @@ class TodolistFormController extends Controller
         return view('todo_create');
     }
 
-    public function create(Request $request)
+    public function create(PostRequest $request)
     {
-        $validator = $request->validate([
-            'task_name' => 'required|max:20',
-            'task_description' => 'required',
-            'assign_person_name' => 'required|max:20',
-            'estimate_hour' => 'required'
-        ]);
-
         $post = new Post();
-        $post->task_name = $request->task_name;
-        $post->task_description = $request->task_description;
-        $post->assign_person_name = $request->assign_person_name;
-        $post->estimate_hour = $request->estimate_hour;
-        $post->save();
+        $post->create($request->all());
 
-        $posts = Post::orderBy('id', 'asc')->get();
-
-        $estimate_hour_sum = 0;
-        foreach ($posts as $post) {
-            $estimate_hour_sum += $post->estimate_hour;
-        }
-
-        return view('todo_list', [
-            "posts" => $posts,
-            "estimate_hour_sum" => $estimate_hour_sum
-        ]);
+        return redirect()->route('todolist.index');
     }
 
     public function editPage($id)
     {
         $post = Post::find($id);
-        return view('todo_edit', [
-            "post" => $post
-        ]);
+        return view('todo_edit', compact('post'));
     }
 
-    public function edit(Request $request)
+    public function edit(PostRequest $request)
     {
-        $validator = $request->validate([
-            'task_name' => 'required|max:20',
-            'task_description' => 'required',
-            'assign_person_name' => 'required|max:20',
-            'estimate_hour' => 'required'
-        ]);
+        Post::find($request->id)->update($request->all());
 
-        Post::find($request->id)->update([
-            'task_name' => $request->task_name,
-            'task_description' => $request->task_description,
-            'assign_person_name' => $request->assign_person_name,
-            'estimate_hour' => $request->estimate_hour
-        ]);
-
-        $posts = Post::orderBy('id', 'asc')->get();
-
-        $estimate_hour_sum = 0;
-        foreach ($posts as $post) {
-            $estimate_hour_sum += $post->estimate_hour;
-        }
-
-        return view('todo_list', [
-            "posts" => $posts,
-            "estimate_hour_sum" => $estimate_hour_sum
-        ]);
+        return redirect()->route('todolist.index');
     }
 
     public function deletePage($id)
     {
         $post = Post::find($id);
-        return view('todo_delete', [
-            "post" => $post
-        ]);
+        return view('todo_delete', compact('post'));
     }
 
     public function delete(Request $request)
     {
         Post::find($request->id)->delete();
-        $posts = Post::orderBy('id', 'asc')->get();
 
-        $estimate_hour_sum = 0;
-        foreach ($posts as $post) {
-            $estimate_hour_sum += $post->estimate_hour;
-        }
-
-        return view('todo_list', [
-            "posts" => $posts,
-            "estimate_hour_sum" => $estimate_hour_sum
-    ]);
+        return redirect()->route('todolist.index');
     }
 }

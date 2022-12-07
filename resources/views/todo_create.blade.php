@@ -1,13 +1,13 @@
-<h1>ToDo List</h1>                                                                                                 
+<h1>ToDo List</h1>
 <div>
     <h2>タスクを追加</h2>
     <form method="POST" action="/create">
         @csrf
         @if ($errors->any())
             <ul>
-            @foreach ($errors->all() as $error)
-               <li style="color:red">{{$error}}</li>
-            @endforeach
+                @foreach ($errors->all() as $error)
+                    <li style="color:red">{{ $error }}</li>
+                @endforeach
             </ul>
         @endif
         <p>
