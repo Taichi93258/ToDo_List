@@ -58,4 +58,16 @@ class TodolistFormController extends Controller
 
         return redirect()->route('todolist.index');
     }
+
+    public function MyPage($id)
+    {
+        $posts = Post::where('user_id', $id)->get();
+
+        $estimate_hour_sum = 0;
+        foreach ($posts as $post) {
+            $estimate_hour_sum += $post->estimate_hour;
+        }
+
+        return view('mypage', compact('posts', 'estimate_hour_sum'));
+    }
 }
