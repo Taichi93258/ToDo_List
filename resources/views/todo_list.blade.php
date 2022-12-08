@@ -16,9 +16,8 @@
 </head>
 
 
-<h1>post List</h1>
+<h1>Posts List</h1>
 <div>
-    <h2>タスクの一覧</h2>
     <a href="/create-page">タスクを追加</a>
     <table border="1">
         <tr>
