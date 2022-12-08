@@ -12,12 +12,8 @@ return new class () extends Migration {
      */
     public function up()
     {
-        Schema::create('posts', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('task_name');
-            $table->text('task_description');
-            $table->string('estimate_hour');
-            $table->timestamps();
+        Schema::table('posts', function (Blueprint $table) {
+            $table->foreignId('user_id')->constrained('users');
         });
     }
 
@@ -28,6 +24,8 @@ return new class () extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('posts');
+        Schema::table('posts', function (Blueprint $table) {
+            //$table->dropColumn('user_id');
+        });
     }
 };
