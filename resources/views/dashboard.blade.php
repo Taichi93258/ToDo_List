@@ -13,5 +13,26 @@
                 </div>
             </div>
         </div>
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
+                    {{ __("Let's make ToDo List!!") }}
+                </div>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
+                    {{ __('Click the link to the timeline at the top of this page!!!') }}
+                </div>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
+                    {{ __('From My Page, you can see only your posts, and the link is at the top!!!') }}
+                </div>
+            </div>
+        </div>
     </div>
 </x-app-layout>
