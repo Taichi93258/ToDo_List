@@ -18,14 +18,8 @@ class PostFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => function () {
-                return User::factory(App\User::class)->create()->id;
-            },
-            'task_name' => fake()->name(),
-            'task_description' => fake()->name(),
-            'assign_person_name' => function () {
-                return User::factory(App\User::class)->create()->name;
-            },
+            'task_name' => fake()->realText(),
+            'task_description' => fake()->realText(),
             'estimate_hour' => fake()->randomNumber(2),
         ];
     }

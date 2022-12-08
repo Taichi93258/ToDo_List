@@ -35,7 +35,7 @@
                 <tr>
                     <td>{{ $post->task_name }}</td>
                     <td>{{ $post->task_description }}</td>
-                    <td>{{ $post->assign_person_name }}</td>
+                    <td>{{ $post->user->name }}</td>
                     <td>{{ $post->estimate_hour }}</td>
                     <td><a href="/edit-page/{{ $post->id }}">編集</a></td>
                     <td><a href="/delete-page/{{ $post->id }}">削除</a></td>
