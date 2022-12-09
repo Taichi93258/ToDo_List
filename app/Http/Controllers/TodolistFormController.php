@@ -13,8 +13,7 @@ class TodolistFormController extends Controller
     {
         $posts = Post::with('user')->get();
 
-        $common = new Estimation();
-        $estimate_hour_sum = $common->estimate($posts);
+        $estimate_hour_sum = Estimation::estimate($posts);
 
         return view('todo_list', compact('posts', 'estimate_hour_sum'));
     }
