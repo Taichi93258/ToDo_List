@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PostRequest;
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Library\Estimation;
 
 class TodolistFormController extends Controller
 {
@@ -12,10 +13,8 @@ class TodolistFormController extends Controller
     {
         $posts = Post::with('user')->get();
 
-        $estimate_hour_sum = 0;
-        foreach ($posts as $post) {
-            $estimate_hour_sum += $post->estimate_hour;
-        }
+        $common = new Estimation();
+        $estimate_hour_sum = $common->estimate($posts);
 
         return view('todo_list', compact('posts', 'estimate_hour_sum'));
     }
@@ -59,14 +58,12 @@ class TodolistFormController extends Controller
         return redirect()->route('todolist.index');
     }
 
-    public function MyPage($id)
+    public function MyPage()
     {
-        $posts = Post::where('user_id', $id)->get();
+        $posts = Post::where('user_id', auth()->id())->get();
 
-        $estimate_hour_sum = 0;
-        foreach ($posts as $post) {
-            $estimate_hour_sum += $post->estimate_hour;
-        }
+        $common = new Estimation();
+        $estimate_hour_sum = $common->estimate($posts);
 
         return view('mypage', compact('posts', 'estimate_hour_sum'));
     }
