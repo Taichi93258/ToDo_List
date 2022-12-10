@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PostRequest;
 use Illuminate\Http\Request;
 use App\Models\Post;
-use App\Library\Estimation;
+use App\Facades\FacadeEstimation;
 
 class TodolistFormController extends Controller
 {
@@ -13,7 +13,7 @@ class TodolistFormController extends Controller
     {
         $posts = Post::with('user')->get();
 
-        $estimate_hour_sum = Estimation::estimate($posts);
+        $estimate_hour_sum = FacadeEstimation::estimate($posts);
 
         return view('todo_list', compact('posts', 'estimate_hour_sum'));
     }
@@ -61,8 +61,7 @@ class TodolistFormController extends Controller
     {
         $posts = Post::where('user_id', auth()->id())->get();
 
-        $common = new Estimation();
-        $estimate_hour_sum = $common->estimate($posts);
+        $estimate_hour_sum = FacadeEstimation::estimate($posts);
 
         return view('mypage', compact('posts', 'estimate_hour_sum'));
     }
