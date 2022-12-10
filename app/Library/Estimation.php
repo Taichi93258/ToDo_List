@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Facade;
 
 class Estimation extends Facade
 {
-    public static function estimate($posts)
+    public function estimate($posts)
     {
         $estimate_hour_sum = 0;
         foreach ($posts as $post) {
