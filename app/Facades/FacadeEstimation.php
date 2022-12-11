@@ -4,7 +4,7 @@ namespace App\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-class FacadeEstimation extends Facade // 【1行目】ここのクラス名と
+class FacadeEstimation extends Facade
 {
     protected static function getFacadeAccessor()
     {
