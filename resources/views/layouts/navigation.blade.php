@@ -18,7 +18,7 @@
                     <x-nav-link :href="route('todo_list')" :active="request()->routeIs('todo_list')">
                         {{ __('タイムライン') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('mypage', auth()->user()->id)" :active="request()->routeIs('mypage')">
+                    <x-nav-link :href="route('mypage')" :active="request()->routeIs('mypage')">
                         {{ __('マイページ') }}
                     </x-nav-link>
                 </div>
