@@ -36,8 +36,11 @@
                     <td>{{ $post->task_description }}</td>
                     <td>{{ $post->user->name }}</td>
                     <td>{{ $post->estimate_hour }}</td>
-                    <td><a href="/edit-page/{{ $post->id }}">編集</a></td>
-                    <td><a href="/delete-page/{{ $post->id }}">削除</a></td>
+
+                    @if (Auth::user()->id == $post->user_id)
+                        <td><a href="/edit-page/{{ $post->id }}">編集</a></td>
+                        <td><a href="/delete-page/{{ $post->id }}">削除</a></td>
+                    @endif
                 </tr>
             @endforeach
         @endisset
