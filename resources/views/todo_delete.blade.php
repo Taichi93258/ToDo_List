@@ -15,7 +15,15 @@
         <p>
             見積時間(h) :{{ $post->estimate_hour }}
         <p>
-            <input type="submit" name="delete" value="削除">
+        <p>
+            優先度 :
+            @foreach (Config::get('priority.priority_key') as $key => $val)
+                @if ($post->priority == $key)
+                    {{ $val }}
+                @endif
+            @endforeach
+        </p>
+        <input type="submit" name="delete" value="削除">
     </form>
     <a href="/todo_list">戻る</a>
 </div>
