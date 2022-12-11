@@ -2,9 +2,7 @@
 
 namespace App\Library;
 
-use Illuminate\Support\Facades\Facade;
-
-class Estimation extends Facade
+class Estimation
 {
     public function estimate($posts)
     {
