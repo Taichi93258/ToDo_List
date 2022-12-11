@@ -22,6 +22,14 @@
         <p>
             見積時間(h):<input type="number" name="estimate_hour">
         </p>
+        <div class="form-group">
+            <label for="priority-field">優先順位</label>
+            <select name="priority" id="priority-field">
+                @foreach (Config::get('priority.priority_key') as $key => $val)
+                    <option value="{{ $key }}">{{ $val }}</option>
+                @endforeach
+            </select>
+        </div>
         <input type="submit" name="create" value="追加">
     </form>
     <a href="/">戻る</a>
