@@ -26,7 +26,7 @@ class TodolistFormController extends Controller
     public function create(PostRequest $request)
     {
         $post = new Post();
-        $post->create($request->all());
+        $post->create($request->all() + ['user_id' => auth()->id()]);
 
         return redirect()->route('todolist.index');
     }
