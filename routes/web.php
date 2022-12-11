@@ -38,3 +38,4 @@ Route::get('/edit-page/{id}', [TodolistFormController::class, 'editPage']);
 Route::post('/edit', [TodolistFormController::class, 'edit']);
 Route::get('/delete-page/{id}', [TodolistFormController::class, 'deletePage']);
 Route::post('/delete/{id}', [TodolistFormController::class, 'delete']);
+Route::get('/mypage', [TodolistFormController::class, 'MyPage'])->name('mypage');
