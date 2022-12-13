@@ -17,9 +17,9 @@
         <p>
         <p>
             優先度 :
-            @foreach (Config::get('priority.priority_key') as $key => $val)
-                @if ($post->priority == $key)
-                    {{ $val }}
+            @foreach ($priorities as $priority)
+                @if ($post->priority == $priority->value)
+                    {{ $priority->label() }}
                 @endif
             @endforeach
         </p>

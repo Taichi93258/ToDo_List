@@ -26,9 +26,9 @@
         <div class="form-group">
             <label for="priority-field">優先順位</label>
             <select name="priority" id="priority-field">
-                @foreach (Config::get('priority.priority_key') as $key => $val)
-                    <option value="{{ $key }}" @if (old('priority', $post->priority) == $key) selected @endif>
-                        {{ $val }}</option>
+                @foreach ($priorities as $priority)
+                    <option value="{{ $priority->value }}" @if (old('priority', $post->priority) == $priority->value) selected @endif>
+                        {{ $priority->label() }}</option>
                 @endforeach
             </select>
         </div>
