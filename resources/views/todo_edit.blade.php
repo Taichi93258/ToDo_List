@@ -27,7 +27,7 @@
             <label for="priority-field">優先順位</label>
             <select name="priority" id="priority-field">
                 @foreach ($priorities as $priority)
-                    <option value="{{ $priority->value }}" @if (old('priority', $post->priority) == $priority->value) selected @endif>
+                    <option value="{{ $priority->value }}" @selected(old('priority', $post->priority) == $priority->value)>
                         {{ $priority->label() }}</option>
                 @endforeach
             </select>
