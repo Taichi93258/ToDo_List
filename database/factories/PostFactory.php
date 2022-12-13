@@ -21,7 +21,7 @@ class PostFactory extends Factory
             'task_name' => fake()->realText(10),
             'task_description' => fake()->realText(10),
             'estimate_hour' => fake()->randomNumber(2),
-            'priority' => null,
+            'priority' => fake()->numberBetween(1, 3),
         ];
     }
 }
