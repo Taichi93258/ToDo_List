@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Priority;
 use App\Http\Requests\PostRequest;
 use Illuminate\Http\Request;
 use App\Models\Post;
@@ -14,13 +15,15 @@ class TodolistFormController extends Controller
         $posts = Post::with('user')->get();
 
         $estimate_hour_sum = FacadeEstimation::estimate($posts);
+        $priorities = Priority::cases();
 
-        return view('todo_list', compact('posts', 'estimate_hour_sum'));
+        return view('todo_list', compact('posts', 'estimate_hour_sum', 'priorities'));
     }
 
     public function createPage()
     {
-        return view('todo_create');
+        $priorities = Priority::cases();
+        return view('todo_create', compact('priorities'));
     }
 
     public function create(PostRequest $request)
@@ -34,7 +37,8 @@ class TodolistFormController extends Controller
     public function editPage($id)
     {
         $post = Post::find($id);
-        return view('todo_edit', compact('post'));
+        $priorities = Priority::cases();
+        return view('todo_edit', compact('post', 'priorities'));
     }
 
     public function edit(PostRequest $request)
@@ -47,7 +51,8 @@ class TodolistFormController extends Controller
     public function deletePage($id)
     {
         $post = Post::find($id);
-        return view('todo_delete', compact('post'));
+        $priorities = Priority::cases();
+        return view('todo_delete', compact('post', 'priorities'));
     }
 
     public function delete(Request $request)
@@ -62,7 +67,8 @@ class TodolistFormController extends Controller
         $posts = Post::where('user_id', auth()->id())->get();
 
         $estimate_hour_sum = FacadeEstimation::estimate($posts);
+        $priorities = Priority::cases();
 
-        return view('mypage', compact('posts', 'estimate_hour_sum'));
+        return view('mypage', compact('posts', 'estimate_hour_sum', 'priorities'));
     }
 }
