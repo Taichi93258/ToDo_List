@@ -20,13 +20,7 @@
                     <td>{{ $post->user->name }}</td>
                     <td>{{ $post->estimate_hour }}</td>
                     <td>{{ $post->created_at }}</td>
-                    <td>
-                        @foreach ($priorities as $priority)
-                            @if ($post->priority == $priority->value)
-                                {{ $priority->label() }}
-                            @endif
-                        @endforeach
-                    </td>
+                    <td>{{ App\Enums\Priority::from($post->priority)->label() }}</td>
                     <td><a href="/edit-page/{{ $post->id }}">編集</a></td>
                     <td><a href="/delete-page/{{ $post->id }}">削除</a></td>
                 </tr>

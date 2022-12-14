@@ -16,12 +16,7 @@
             見積時間(h) :{{ $post->estimate_hour }}
         <p>
         <p>
-            優先度 :
-            @foreach ($priorities as $priority)
-                @if ($post->priority == $priority->value)
-                    {{ $priority->label() }}
-                @endif
-            @endforeach
+            優先度 :{{ App\Enums\Priority::from($post->priority)->label() }}
         </p>
         <input type="submit" name="delete" value="削除">
     </form>

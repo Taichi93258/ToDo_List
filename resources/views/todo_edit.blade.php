@@ -26,7 +26,7 @@
         <div class="form-group">
             <label for="priority-field">優先順位</label>
             <select name="priority" id="priority-field">
-                @foreach ($priorities as $priority)
+                @foreach (App\Enums\Priority::cases() as $priority)
                     <option value="{{ $priority->value }}" @selected(old('priority', $post->priority) == $priority->value)>
                         {{ $priority->label() }}</option>
                 @endforeach
