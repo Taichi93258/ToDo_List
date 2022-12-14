@@ -13,7 +13,7 @@ return new class () extends Migration {
     public function up()
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->integer('priority')->nullable()->after('estimate_hour');
+            $table->integer('priority')->after('estimate_hour');
         });
     }
 
