@@ -40,8 +40,8 @@
                     <td>{{ $post->created_at }}</td>
                     <td>{{ App\Enums\Priority::from($post->priority)->label() }}</td>
                     @if (Auth::id() == $post->user_id)
-                        <td><a href="/edit-page/{{ $post->id }}">編集</a></td>
-                        <td><a href="/delete-page/{{ $post->id }}">削除</a></td>
+                        <td><a href="{{ route('editpage', ['id' => $post->id]) }}">編集</a></td>
+                        <td><a href="{{ route('deletepage', ['id' => $post->id]) }}">削除</a></td>
                     @endif
                 </tr>
             @endforeach
