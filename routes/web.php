@@ -34,8 +34,8 @@ Route::get('/', [TodolistFormController::class, 'index'])->name('todolist.index'
 Route::get('/todo_list', [TodolistFormController::class, 'index'])->name('todo_list');
 Route::get('/create-page', [TodolistFormController::class, 'createPage']);
 Route::post('/create', [TodolistFormController::class, 'create']);
-Route::get('/edit-page/{id}', [TodolistFormController::class, 'editPage']);
+Route::get('/edit-page/{id}', [TodolistFormController::class, 'editPage'])->name('editpage');
 Route::post('/edit', [TodolistFormController::class, 'edit']);
-Route::get('/delete-page/{id}', [TodolistFormController::class, 'deletePage']);
+Route::get('/delete-page/{id}', [TodolistFormController::class, 'deletePage'])->name('deletepage');
 Route::post('/delete/{id}', [TodolistFormController::class, 'delete']);
 Route::get('/mypage', [TodolistFormController::class, 'MyPage'])->name('mypage');
