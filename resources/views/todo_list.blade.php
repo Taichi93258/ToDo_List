@@ -39,10 +39,12 @@
                     <td>{{ $post->estimate_hour }}</td>
                     <td>{{ $post->created_at }}</td>
                     <td>{{ App\Enums\Priority::from($post->priority)->label() }}</td>
-                    @if (Auth::id() == $post->user_id)
+                    @can('update', $post)
                         <td><a href="{{ route('editpage', ['id' => $post->id]) }}">編集</a></td>
+                    @endcan
+                    @can('delete', $post)
                         <td><a href="{{ route('deletepage', ['id' => $post->id]) }}">削除</a></td>
-                    @endif
+                    @endcan
                 </tr>
             @endforeach
         @endisset
