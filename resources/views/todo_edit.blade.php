@@ -1,7 +1,8 @@
 <h1>post List</h1>
 <div>
     <h2>タスクの修正</h2>
-    <form method="POST" action="/edit">
+    <form method="POST" action="{{ route('todolists.update', ['todolist' => $post->id]) }}">
+        @method('PUT')
         @csrf
         @if ($errors->any())
             <ul>
@@ -34,5 +35,5 @@
         </div>
         <input type="submit" name="edit" value="修正">
     </form>
-    <a href="/todo_list">戻る</a>
+    <a href="/">戻る</a>
 </div>

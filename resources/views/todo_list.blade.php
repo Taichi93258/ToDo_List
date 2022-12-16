@@ -18,7 +18,7 @@
 
 <h1>Posts List</h1>
 <div>
-    <a href="/create-page">タスクを追加</a>
+    <a href="/todolists/create">タスクを追加</a>
     <table border="1">
         <tr>
             <th>タスクの名前</th>
@@ -40,10 +40,10 @@
                     <td>{{ $post->created_at }}</td>
                     <td>{{ App\Enums\Priority::from($post->priority)->label() }}</td>
                     @can('update', $post)
-                        <td><a href="{{ route('editpage', ['id' => $post->id]) }}">編集</a></td>
+                        <td><a href="{{ route('todolists.edit', ['todolist' => $post->id]) }}">編集</a></td>
                     @endcan
                     @can('delete', $post)
-                        <td><a href="{{ route('deletepage', ['id' => $post->id]) }}">削除</a></td>
+                        <td><a href="{{ route('todolists.delete', ['todolist' => $post->id]) }}">削除</a></td>
                     @endcan
                 </tr>
             @endforeach
