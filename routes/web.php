@@ -30,12 +30,7 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-Route::get('/', [FormController::class, 'index'])->name('todolist.index');
-Route::get('/todo_list', [FormController::class, 'index'])->name('todo_list');
-Route::get('/create-page', [FormController::class, 'create']);
-Route::post('/create', [FormController::class, 'store']);
-Route::get('/edit-page/{id}', [FormController::class, 'edit'])->name('editpage');
-Route::post('/edit', [FormController::class, 'update']);
-Route::get('/delete-page/{id}', [FormController::class, 'delete'])->name('deletepage');
-Route::post('/delete/{id}', [FormController::class, 'destroy']);
+Route::resource('todolists', FormController::class);
+Route::get('/', [FormController::class, 'index']);
+Route::get('/todolists/{todolist}/delete', [FormController::class, 'delete'])->name('todolists.delete');
 Route::get('/mypage', [FormController::class, 'mypage'])->name('mypage');
