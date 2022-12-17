@@ -30,7 +30,7 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-Route::resource('todolists', FormController::class);
+Route::resource('posts', FormController::class);
 Route::get('/', [FormController::class, 'index']);
-Route::get('/todolists/{todolist}/delete', [FormController::class, 'delete'])->name('todolists.delete');
+Route::get('/posts/{post}/delete', [FormController::class, 'delete'])->name('posts.delete');
 Route::get('/mypage', [FormController::class, 'mypage'])->name('mypage');
