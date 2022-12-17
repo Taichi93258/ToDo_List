@@ -38,12 +38,11 @@ class FormController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PostRequest $request)
+    public function store(PostRequest $request, Post $post)
     {
-        $post = new Post();
         $post->create($request->all() + ['user_id' => auth()->id()]);
 
-        return redirect()->route('todolists.index');
+        return redirect()->route('posts.index');
     }
 
     /**
@@ -62,9 +61,10 @@ class FormController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($todolist)
+    public function edit(Post $post)
     {
-        return view('todo_edit')->with('post', Post::find($todolist));
+        $this->authorize('edit', $post);
+        return view('todo_edit', compact('post'));
     }
 
     /**
@@ -76,7 +76,8 @@ class FormController extends Controller
      */
     public function update(PostRequest $request)
     {
-        return redirect()->route('todolists.index')->with(Post::find($request->todolist)->update($request->all()));
+        Post::find($request->post)->update($request->all());
+        return redirect()->route('posts.index');
     }
 
     /**
@@ -85,9 +86,10 @@ class FormController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function delete($todolist)
+    public function delete(Post $post)
     {
-        return view('todo_delete')->with('post', Post::find($todolist));
+        $this->authorize('edit', $post);
+        return view('todo_delete', compact('post'));
     }
 
     /**
@@ -98,7 +100,8 @@ class FormController extends Controller
      */
     public function destroy(Request $request)
     {
-        return redirect()->route('todolists.index')->with(Post::find($request->todolist)->delete());
+        Post::find($request->post)->delete();
+        return redirect()->route('posts.index');
     }
 
     public function mypage()
