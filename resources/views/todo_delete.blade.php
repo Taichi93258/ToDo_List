@@ -1,7 +1,7 @@
 <h1>post List</h1>
 <div>
     <h2>タスクを削除</h2>
-    <form method="POST" action="{{ route('todolists.destroy', ['todolist' => $post->id]) }}">
+    <form method="POST" action="{{ route('posts.destroy', ['post' => $post->id]) }}">
         @method('DELETE')
         @csrf
         <p>

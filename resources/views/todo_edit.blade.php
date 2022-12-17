@@ -1,7 +1,7 @@
 <h1>post List</h1>
 <div>
     <h2>タスクの修正</h2>
-    <form method="POST" action="{{ route('todolists.update', ['todolist' => $post->id]) }}">
+    <form method="POST" action="{{ route('posts.update', ['post' => $post->id]) }}">
         @method('PUT')
         @csrf
         @if ($errors->any())

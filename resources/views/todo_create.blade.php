@@ -1,7 +1,7 @@
 <h1>ToDo List</h1>
 <div>
     <h2>タスクを追加</h2>
-    <form method="POST" action="{{ route('todolists.store') }}">
+    <form method="POST" action="{{ route('posts.store') }}">
         @csrf
         @if ($errors->any())
             <ul>
