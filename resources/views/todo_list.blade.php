@@ -18,7 +18,7 @@
 
 <h1>Posts List</h1>
 <div>
-    <a href="/create-page">タスクを追加</a>
+    <a href="/posts/create">タスクを追加</a>
     <table border="1">
         <tr>
             <th>タスクの名前</th>
@@ -38,17 +38,13 @@
                     <td>{{ $post->user->name }}</td>
                     <td>{{ $post->estimate_hour }}</td>
                     <td>{{ $post->created_at }}</td>
-                    <td>
-                        @foreach ($priorities as $priority)
-                            @if ($post->priority == $priority->value)
-                                {{ $priority->label() }}
-                            @endif
-                        @endforeach
-                    </td>
-                    @if (Auth::id() == $post->user_id)
-                        <td><a href="/edit-page/{{ $post->id }}">編集</a></td>
-                        <td><a href="/delete-page/{{ $post->id }}">削除</a></td>
-                    @endif
+                    <td>{{ App\Enums\Priority::from($post->priority)->label() }}</td>
+                    @can('update', $post)
+                        <td><a href="{{ route('posts.edit', ['post' => $post->id]) }}">編集</a></td>
+                    @endcan
+                    @can('delete', $post)
+                        <td><a href="{{ route('posts.delete', ['post' => $post->id]) }}">削除</a></td>
+                    @endcan
                 </tr>
             @endforeach
         @endisset

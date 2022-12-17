@@ -3,7 +3,7 @@
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\TodolistFormController;
+use App\Http\Controllers\FormController;
 
 /*
 
@@ -30,12 +30,7 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-Route::get('/', [TodolistFormController::class, 'index'])->name('todolist.index');
-Route::get('/todo_list', [TodolistFormController::class, 'index'])->name('todo_list');
-Route::get('/create-page', [TodolistFormController::class, 'createPage']);
-Route::post('/create', [TodolistFormController::class, 'create']);
-Route::get('/edit-page/{id}', [TodolistFormController::class, 'editPage']);
-Route::post('/edit', [TodolistFormController::class, 'edit']);
-Route::get('/delete-page/{id}', [TodolistFormController::class, 'deletePage']);
-Route::post('/delete/{id}', [TodolistFormController::class, 'delete']);
-Route::get('/mypage', [TodolistFormController::class, 'MyPage'])->name('mypage');
+Route::resource('posts', FormController::class);
+Route::get('/', [FormController::class, 'index']);
+Route::get('/posts/{post}/delete', [FormController::class, 'delete'])->name('posts.delete');
+Route::get('/mypage', [FormController::class, 'mypage'])->name('mypage');

@@ -1,7 +1,8 @@
 <h1>post List</h1>
 <div>
     <h2>タスクを削除</h2>
-    <form method="POST" action="/delete/{{ $post->id }}">
+    <form method="POST" action="{{ route('posts.destroy', ['post' => $post->id]) }}">
+        @method('DELETE')
         @csrf
         <p>
             タスクの名前：{{ $post->task_name }}
@@ -16,14 +17,9 @@
             見積時間(h) :{{ $post->estimate_hour }}
         <p>
         <p>
-            優先度 :
-            @foreach ($priorities as $priority)
-                @if ($post->priority == $priority->value)
-                    {{ $priority->label() }}
-                @endif
-            @endforeach
+            優先度 :{{ App\Enums\Priority::from($post->priority)->label() }}
         </p>
         <input type="submit" name="delete" value="削除">
     </form>
-    <a href="/todo_list">戻る</a>
+    <a href="/">戻る</a>
 </div>

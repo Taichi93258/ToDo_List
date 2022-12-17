@@ -1,7 +1,7 @@
 <h1>ToDo List</h1>
 <div>
     <h2>タスクを追加</h2>
-    <form method="POST" action="/create">
+    <form method="POST" action="{{ route('posts.store') }}">
         @csrf
         @if ($errors->any())
             <ul>
@@ -25,7 +25,7 @@
         <div class="form-group">
             <label for="priority-field">優先順位</label>
             <select name="priority" id="priority-field">
-                @foreach ($priorities as $priority)
+                @foreach (App\Enums\Priority::cases() as $priority)
                     <option value="{{ $priority->value }}">{{ $priority->label() }}</option>
                 @endforeach
             </select>

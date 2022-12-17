@@ -1,7 +1,8 @@
 <h1>post List</h1>
 <div>
     <h2>タスクの修正</h2>
-    <form method="POST" action="/edit">
+    <form method="POST" action="{{ route('posts.update', ['post' => $post->id]) }}">
+        @method('PUT')
         @csrf
         @if ($errors->any())
             <ul>
@@ -26,7 +27,7 @@
         <div class="form-group">
             <label for="priority-field">優先順位</label>
             <select name="priority" id="priority-field">
-                @foreach ($priorities as $priority)
+                @foreach (App\Enums\Priority::cases() as $priority)
                     <option value="{{ $priority->value }}" @selected(old('priority', $post->priority) == $priority->value)>
                         {{ $priority->label() }}</option>
                 @endforeach
@@ -34,5 +35,5 @@
         </div>
         <input type="submit" name="edit" value="修正">
     </form>
-    <a href="/todo_list">戻る</a>
+    <a href="/">戻る</a>
 </div>
