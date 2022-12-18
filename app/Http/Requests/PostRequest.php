@@ -30,4 +30,9 @@ class PostRequest extends FormRequest
             'estimate_hour' => ['required'],
         ];
     }
+
+    public function addUserIdToRequest()
+    {
+        return $this->all() + ['user_id' => auth()->id()];
+    }
 }
