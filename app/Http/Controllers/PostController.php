@@ -7,16 +7,16 @@ use App\Http\Requests\PostRequest;
 use App\Models\Post;
 use App\Facades\FacadeEstimation;
 
-class FormController extends Controller
+class PostController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Post $post)
     {
-        $posts = Post::with('user')->get();
+        $posts = $post->fetchPostWithUser();
         $estimate_hour_sum = FacadeEstimation::estimate($posts);
 
         return view('todo_list', compact('posts', 'estimate_hour_sum'));
@@ -40,7 +40,7 @@ class FormController extends Controller
      */
     public function store(PostRequest $request, Post $post)
     {
-        $post->create($request->all() + ['user_id' => auth()->id()]);
+        $post->savePost($request);
 
         return redirect()->route('posts.index');
     }
@@ -74,9 +74,9 @@ class FormController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(PostRequest $request)
+    public function update(PostRequest $request, Post $post)
     {
-        Post::find($request->post)->update($request->all());
+        $post->updatePost($request);
         return redirect()->route('posts.index');
     }
 
@@ -98,15 +98,15 @@ class FormController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy(Request $request, Post $post)
     {
-        Post::find($request->post)->delete();
+        $post->deletePost();
         return redirect()->route('posts.index');
     }
 
-    public function mypage()
+    public function mypage(Post $post)
     {
-        $posts = Post::where('user_id', auth()->id())->get();
+        $posts = $post->findLoginUser();
 
         $estimate_hour_sum = FacadeEstimation::estimate($posts);
 
