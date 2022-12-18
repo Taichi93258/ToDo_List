@@ -31,8 +31,9 @@ class PostRequest extends FormRequest
         ];
     }
 
-    public function addUserIdToRequest()
+    public function passedValidation()
     {
-        return $this->all() + ['user_id' => auth()->id()];
+        $request = $this->all();
+        return array_push($request, ['user_id' => auth()->id()]);
     }
 }

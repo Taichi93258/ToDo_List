@@ -33,8 +33,7 @@ class Post extends Model
 
     public function updatePost(PostRequest $request)
     {
-        $info = $request->addUserIdToRequest();
-        $this->update($info);
+        $this->update($request->all());
     }
 
     public function deletePost()
