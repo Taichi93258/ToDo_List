@@ -3,7 +3,7 @@
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\FormController;
+use App\Http\Controllers\PostController;
 
 /*
 
@@ -30,7 +30,7 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-Route::resource('posts', FormController::class);
-Route::get('/', [FormController::class, 'index']);
-Route::get('/posts/{post}/delete', [FormController::class, 'delete'])->name('posts.delete');
-Route::get('/mypage', [FormController::class, 'mypage'])->name('mypage');
+Route::resource('posts', PostController::class);
+Route::get('/', [PostController::class, 'index']);
+Route::get('/posts/{post}/delete', [PostController::class, 'delete'])->name('posts.delete');
+Route::get('/mypage', [PostController::class, 'mypage'])->name('mypage');
