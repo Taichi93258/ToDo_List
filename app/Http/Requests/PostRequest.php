@@ -30,4 +30,10 @@ class PostRequest extends FormRequest
             'estimate_hour' => ['required'],
         ];
     }
+
+    public function passedValidation()
+    {
+        $request = $this->all();
+        return array_push($request, ['user_id' => auth()->id()]);
+    }
 }

@@ -13,7 +13,7 @@ return new class () extends Migration {
     public function up()
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->foreignId('user_id')->after('id')->constrained('users')->onDelete('cascade');
+            $table->integer('priority')->after('estimate_hour');
         });
     }
 
@@ -25,8 +25,7 @@ return new class () extends Migration {
     public function down()
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->dropForeign('posts_user_id_foreign');
-            $table->dropColumn('user_id');
+            //
         });
     }
 };

@@ -18,9 +18,10 @@ class PostFactory extends Factory
     public function definition()
     {
         return [
-            'task_name' => fake()->realText(),
-            'task_description' => fake()->realText(),
+            'task_name' => fake()->realText(10),
+            'task_description' => fake()->realText(10),
             'estimate_hour' => fake()->randomNumber(2),
+            'priority' => fake()->numberBetween(1, 3),
         ];
     }
 }

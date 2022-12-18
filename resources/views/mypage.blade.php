@@ -1,6 +1,6 @@
 <h1>MyPage</h1>
 <div>
-    <a href="/create-page">タスクを追加</a>
+    <a href="/posts/create">タスクを追加</a>
     <table border="1">
         <tr>
             <th>タスクの名前</th>
@@ -8,6 +8,7 @@
             <th>担当者の名前</th>
             <th>見積時間(h)</th>
             <th>投稿時間</th>
+            <th>優先度</th>
             <th colspan="2">操作</th>
         </tr>
 
@@ -18,8 +19,10 @@
                     <td>{{ $post->task_description }}</td>
                     <td>{{ $post->user->name }}</td>
                     <td>{{ $post->estimate_hour }}</td>
-                    <td><a href="/edit-page/{{ $post->id }}">編集</a></td>
-                    <td><a href="/delete-page/{{ $post->id }}">削除</a></td>
+                    <td>{{ $post->created_at }}</td>
+                    <td>{{ App\Enums\Priority::from($post->priority)->label() }}</td>
+                    <td><a href="{{ route('posts.edit', ['post' => $post->id]) }}">編集</a></td>
+                    <td><a href="{{ route('posts.delete', ['post' => $post->id]) }}">削除</a></td>
                 </tr>
             @endforeach
         @endisset
