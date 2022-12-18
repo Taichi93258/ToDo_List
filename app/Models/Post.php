@@ -16,27 +16,27 @@ class Post extends Model
         return $this->belongsTo('App\Models\User');
     }
 
-    public function GetUser()
+    public function getUser()
     {
         return $this->with('user')->get();
     }
 
-    public function GetLoginUser()
+    public function getLoginUser()
     {
         return $this->where('user_id', auth()->id())->get();
     }
 
-    public function StorePost(PostRequest $request)
+    public function savePost(PostRequest $request)
     {
         $this->create($request->all() + ['user_id' => auth()->id()]);
     }
 
-    public function UpdatePost(PostRequest $request)
+    public function updatePost(PostRequest $request)
     {
         $this->update($request->all());
     }
 
-    public function DeletePost()
+    public function deletePost()
     {
         $this->delete();
     }

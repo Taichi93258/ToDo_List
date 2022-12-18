@@ -16,7 +16,7 @@ class PostController extends Controller
      */
     public function index(Post $post)
     {
-        $posts = $post->GetUser();
+        $posts = $post->getUser();
         $estimate_hour_sum = FacadeEstimation::estimate($posts);
 
         return view('todo_list', compact('posts', 'estimate_hour_sum'));
@@ -40,7 +40,7 @@ class PostController extends Controller
      */
     public function store(PostRequest $request, Post $post)
     {
-        $post->StorePost($request);
+        $post->savePost($request);
 
         return redirect()->route('posts.index');
     }
@@ -76,7 +76,7 @@ class PostController extends Controller
      */
     public function update(PostRequest $request, Post $post)
     {
-        $post->UpdatePost($request);
+        $post->updatePost($request);
         return redirect()->route('posts.index');
     }
 
@@ -100,13 +100,13 @@ class PostController extends Controller
      */
     public function destroy(Request $request, Post $post)
     {
-        $post->DeletePost();
+        $post->deletePost();
         return redirect()->route('posts.index');
     }
 
     public function mypage(Post $post)
     {
-        $posts = $post->GetLoginUser();
+        $posts = $post->getLoginUser();
 
         $estimate_hour_sum = FacadeEstimation::estimate($posts);
 
