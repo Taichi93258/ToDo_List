@@ -16,7 +16,7 @@ class PostController extends Controller
      */
     public function index(Post $post)
     {
-        $posts = $post->getUser();
+        $posts = $post->fetchPostWithUser();
         $estimate_hour_sum = FacadeEstimation::estimate($posts);
 
         return view('todo_list', compact('posts', 'estimate_hour_sum'));
@@ -106,7 +106,7 @@ class PostController extends Controller
 
     public function mypage(Post $post)
     {
-        $posts = $post->getLoginUser();
+        $posts = $post->findLoginUser();
 
         $estimate_hour_sum = FacadeEstimation::estimate($posts);
 
