@@ -35,4 +35,4 @@ Route::resource('posts', PostController::class);
 Route::get('/', [PostController::class, 'index']);
 Route::get('/posts/{post}/delete', [PostController::class, 'delete'])->name('posts.delete');
 Route::get('/mypage', [PostController::class, 'mypage'])->name('posts.mypage');
-Route::post('/users/{user}/release', [UserController::class, 'release'])->name('users.release');
+Route::post('/posts/{post}/release', [PostController::class, 'release'])->name('posts.release');
