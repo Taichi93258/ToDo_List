@@ -31,7 +31,7 @@ class Post extends Model
         $this->create($request);
     }
 
-    public function updatePost(PostRequest $request)
+    public function updatePost($request)
     {
         $this->update($request->all());
     }
