@@ -4,6 +4,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\UserController;
 
 /*
 
@@ -33,4 +34,5 @@ require __DIR__.'/auth.php';
 Route::resource('posts', PostController::class);
 Route::get('/', [PostController::class, 'index']);
 Route::get('/posts/{post}/delete', [PostController::class, 'delete'])->name('posts.delete');
-Route::get('/mypage', [PostController::class, 'mypage'])->name('mypage');
+Route::get('/mypage', [PostController::class, 'mypage'])->name('posts.mypage');
+Route::post('/users/{user}/release', [UserController::class, 'release'])->name('users.release');
