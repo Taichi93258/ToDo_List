@@ -40,4 +40,9 @@ class Post extends Model
     {
         $this->delete();
     }
+
+    public function updateUserRelease($request)
+    {
+        $this->update(['release' => $request->input('release')]);
+    }
 }
