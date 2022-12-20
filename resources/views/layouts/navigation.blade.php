@@ -18,7 +18,7 @@
                     <x-nav-link :href="route('posts.index')" :active="request()->routeIs('posts.index')">
                         {{ __('タイムライン') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('mypage')" :active="request()->routeIs('mypage')">
+                    <x-nav-link :href="route('posts.mypage')" :active="request()->routeIs('posts.mypage')">
                         {{ __('マイページ') }}
                     </x-nav-link>
                 </div>
