@@ -33,4 +33,16 @@
             見積時間の合計(h):{{ $estimate_hour_sum }}
         </p>
     @endisset
+    <form method="POST" action="{{ route('users.release', ['user' => $post->user->id]) }}">
+        <div class="form-group">
+            <label for="release-field">公開設定</label>
+            <select name="release" id="release-field">
+                @foreach (App\Enums\Release::cases() as $release)
+                    <option value="{{ $release->value }}" @selected(old('priority', $post->user->release) == $release->value)>
+                        {{ $release->label() }}</option>
+                @endforeach
+            </select>
+        </div>
+        <input type="submit" name="change" value="変更を反映">
+    </form>
 </div>
