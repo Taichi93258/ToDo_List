@@ -34,6 +34,7 @@
         </p>
     @endisset
     <form method="POST" action="{{ route('users.release', ['user' => $post->user->id]) }}">
+        @csrf
         <div class="form-group">
             <label for="release-field">公開設定</label>
             <select name="release" id="release-field">
