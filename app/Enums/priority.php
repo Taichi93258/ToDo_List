@@ -17,3 +17,17 @@ enum Priority: int
         };
     }
 }
+
+enum Release: int
+{
+    case public = 1;
+    case private = 0;
+
+    public function label(): string
+    {
+        return match ($this) {
+            Release::public => '公開',
+            Release::private => '非公開',
+        };
+    }
+}
