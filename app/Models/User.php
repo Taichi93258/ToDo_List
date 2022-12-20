@@ -25,6 +25,7 @@ class User extends Authenticatable implements MustVerifyEmailContract
         'name',
         'email',
         'password',
+        'release',
     ];
 
     /**
@@ -49,5 +50,10 @@ class User extends Authenticatable implements MustVerifyEmailContract
     public function posts()
     {
         return $this->hasMany('App\Models\Post');
+    }
+
+    public function updateUserRelease($request)
+    {
+        $this->update(['release' => $request->input('release')]);
     }
 }
