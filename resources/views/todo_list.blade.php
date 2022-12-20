@@ -32,6 +32,9 @@
 
         @isset($posts)
             @foreach ($posts as $post)
+                @if ($post->user->release == 0)
+                    @continue
+                @endif
                 <tr>
                     <td>{{ $post->task_name }}</td>
                     <td>{{ $post->task_description }}</td>
