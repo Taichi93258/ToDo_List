@@ -51,9 +51,4 @@ class User extends Authenticatable implements MustVerifyEmailContract
     {
         return $this->hasMany('App\Models\Post');
     }
-
-    public function updateUserRelease($request)
-    {
-        $this->update(['release' => $request->input('release')]);
-    }
 }
