@@ -32,7 +32,7 @@
 
         @isset($posts)
             @foreach ($posts as $post)
-                @if ($post->release == App\Enums\Release::private->value)
+                @if ($post->release == App\Enums\Release::PRIVATE->value)
                     @continue
                 @endif
                 <tr>
