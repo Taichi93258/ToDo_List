@@ -22,32 +22,37 @@
             <th colspan="2">操作</th>
         </tr>
 
-        @isset($posts)
-            @foreach ($posts as $post)
-                <tr>
-                    <td>{{ $post->task_name }}</td>
-                    <td>{{ $post->task_description }}</td>
-                    <td>{{ $post->user->name }}</td>
-                    <td>{{ $post->estimate_hour }}</td>
-                    <td>{{ $post->created_at }}</td>
-                    <td>{{ App\Enums\Priority::from($post->priority)->label() }}</td>
-                    <td>
-                        <form method="POST" action="{{ route('posts.release') }}" id="release">
-                            @csrf
+        <form method="POST" action="{{ route('posts.release') }}" id="release">
+            @csrf
+            @isset($posts)
+                @foreach ($posts as $post)
+                    <tr>
+                        <td>{{ $post->task_name }}</td>
+                        <td>{{ $post->task_description }}</td>
+                        <td>{{ $post->user->name }}</td>
+                        <td>{{ $post->estimate_hour }}</td>
+                        <td>{{ $post->created_at }}</td>
+                        <td>{{ App\Enums\Priority::from($post->priority)->label() }}</td>
+                        <td>
                             <div class="form-group">
+                                @php
+                                    $loop_index = $loop->index;
+                                @endphp
+                                <input type="hidden" name="release[{{ $loop->index }}][post_id]"
+                                    value="{{ $post->id }}">
                                 @foreach (App\Enums\Release::cases() as $release)
-                                    <input type='radio' name="release" value="{{ $release->value }}"
-                                        @checked(old('priority', $post->release) == $release->value)>
+                                    <input type='radio' name="release[{{ $loop_index }}][release]"
+                                        value="{{ $release->value }}" @checked(old('priority', $post->release) == $release->value)>
                                     <option>{{ $release->label() }}</option>
                                 @endforeach
                             </div>
-                        </form>
-                    </td>
-                    <td><a href="{{ route('posts.edit', ['post' => $post->id]) }}">編集</a></td>
-                    <td><a href="{{ route('posts.delete', ['post' => $post->id]) }}">削除</a></td>
-                </tr>
-            @endforeach
-        @endisset
+                        </td>
+                        <td><a href="{{ route('posts.edit', ['post' => $post->id]) }}">編集</a></td>
+                        <td><a href="{{ route('posts.delete', ['post' => $post->id]) }}">削除</a></td>
+                    </tr>
+                @endforeach
+            @endisset
+        </form>
     </table>
     <input type="submit" form="release" value="公開設定を変更">
 
