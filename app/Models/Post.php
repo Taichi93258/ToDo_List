@@ -44,8 +44,11 @@ class Post extends Model
         $this->delete();
     }
 
-    public function updateUserRelease($request)
+    public function updatePostRelease($request)
     {
-        $this->update(['release' => $request->input('release')]);
+        foreach ($request->input('release') as $value) {
+            $this->find($value['post_id'])
+            ->update(['release' => $value['release']]);
+        }
     }
 }
