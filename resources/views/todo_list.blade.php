@@ -32,6 +32,9 @@
 
         @isset($posts)
             @foreach ($posts as $post)
+                @if ($post->release == App\Enums\Release::PRIVATE->value)
+                    @continue
+                @endif
                 <tr>
                     <td>{{ $post->task_name }}</td>
                     <td>{{ $post->task_description }}</td>

@@ -112,4 +112,10 @@ class PostController extends Controller
 
         return view('mypage', compact('posts', 'estimate_hour_sum'));
     }
+
+    public function release(Request $request, Post $post)
+    {
+        $post->updatePostRelease($request);
+        return redirect()->route('posts.index');
+    }
 }

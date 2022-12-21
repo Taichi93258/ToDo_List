@@ -9,6 +9,9 @@ use App\Http\Requests\PostRequest;
 class Post extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['release'];
+
     protected $guarded = ['id'];
 
     public function user()
@@ -31,7 +34,7 @@ class Post extends Model
         $this->create($request);
     }
 
-    public function updatePost(PostRequest $request)
+    public function updatePost($request)
     {
         $this->update($request->all());
     }
@@ -39,5 +42,13 @@ class Post extends Model
     public function deletePost()
     {
         $this->delete();
+    }
+
+    public function updatePostRelease($request)
+    {
+        foreach ($request->input('release') as $value) {
+            $this->find($value['post_id'])
+            ->update(['release' => $value['release']]);
+        }
     }
 }
