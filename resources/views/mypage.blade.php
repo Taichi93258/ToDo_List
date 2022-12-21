@@ -32,13 +32,13 @@
                     <td>{{ $post->created_at }}</td>
                     <td>{{ App\Enums\Priority::from($post->priority)->label() }}</td>
                     <td>
-                        <form method="POST" action="{{ route('posts.release', ['post' => $post->id]) }}" id="release">
+                        <form method="POST" action="{{ route('posts.release') }}" id="release">
                             @csrf
                             <div class="form-group">
                                 @foreach (App\Enums\Release::cases() as $release)
                                     <input type='radio' name="release" value="{{ $release->value }}"
                                         @checked(old('priority', $post->release) == $release->value)>
-                                    {{ $release->label() }}</option>
+                                    <option>{{ $release->label() }}</option>
                                 @endforeach
                             </div>
                         </form>
