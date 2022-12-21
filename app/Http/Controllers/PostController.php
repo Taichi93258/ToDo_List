@@ -115,7 +115,7 @@ class PostController extends Controller
 
     public function release(Request $request, Post $post)
     {
-        $post->updateUserRelease($request);
+        $post->updatePost($request);
         return redirect()->route('posts.index');
     }
 }
