@@ -9,6 +9,9 @@ use App\Http\Requests\PostRequest;
 class Post extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['release'];
+
     protected $guarded = ['id'];
 
     public function user()
