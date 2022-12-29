@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Http\Requests\PostRequest;
 
 class Post extends Model
 {
@@ -19,14 +18,20 @@ class Post extends Model
         return $this->belongsTo('App\Models\User');
     }
 
+    public function tags()
+    {
+        return $this->belongsToMany('App\Models\Tag', 'post_tag');
+        ;
+    }
+
     public function fetchPostWithUser()
     {
         return $this->with('user')->get();
     }
 
-    public function findLoginUser()
+    public function findLoginUser($user_id)
     {
-        return $this->where('user_id', auth()->id())->get();
+        return $this->where('user_id', $user_id)->get();
     }
 
     public function savePost($request)
@@ -50,5 +55,14 @@ class Post extends Model
             $this->find($value['post_id'])
             ->update(['release' => $value['release']]);
         }
+    }
+
+    public function searchTags($request)
+    {
+        $query = Post::query();
+
+        $query->whereHas(['tags' => function ($query) use ($request) {
+            $query->where('tags->id', 'like', $request);
+        }])->get();
     }
 }
