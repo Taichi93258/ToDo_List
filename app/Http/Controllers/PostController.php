@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\PostRequest;
 use App\Models\Post;
+use App\Models\Tag;
 use App\Facades\FacadeEstimation;
 
 class PostController extends Controller
@@ -14,12 +15,14 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Post $post)
+    public function index(Post $post, Request $request)
     {
+        $tags = Tag::all();
         $posts = $post->fetchPostWithUser();
+        // $selected_tags = $post->searchTags($request);
         $estimate_hour_sum = FacadeEstimation::estimate($posts);
 
-        return view('todo_list', compact('posts', 'estimate_hour_sum'));
+        return view('todo_list', compact('posts', 'estimate_hour_sum', 'tags'));
     }
 
     /**
@@ -29,7 +32,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('todo_create');
+        $tags = Tag::all();
+        return view('todo_create', compact('tags'));
     }
 
     /**
@@ -40,8 +44,9 @@ class PostController extends Controller
      */
     public function store(PostRequest $request, Post $post)
     {
+        $post = Post::find($post->id);
+        $post->tags()->attach($request->tags);
         $post->savePost($request);
-
         return redirect()->route('posts.index');
     }
 
@@ -106,7 +111,7 @@ class PostController extends Controller
 
     public function mypage(Post $post)
     {
-        $posts = $post->findLoginUser();
+        $posts = $post->findLoginUser(auth()->id());
 
         $estimate_hour_sum = FacadeEstimation::estimate($posts);
 
