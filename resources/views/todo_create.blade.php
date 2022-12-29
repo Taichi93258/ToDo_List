@@ -30,6 +30,13 @@
                 @endforeach
             </select>
         </div>
+        <div>
+            タグ：
+            @foreach ($tags as $tag)
+                <input type="checkbox" name="tags" value="{{ $tag->id }}">
+                {{ $tag->name }}
+            @endforeach
+        </div>
         <input type="submit" name="create" value="追加">
     </form>
     <a href="/">戻る</a>
