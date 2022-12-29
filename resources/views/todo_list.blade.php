@@ -19,6 +19,13 @@
 <h1>Posts List</h1>
 <div>
     <a href="/posts/create">タスクを追加</a>
+    <form action="{{ route('posts.index') }}" method="GET">
+        @foreach ($tags as $tag)
+            <input type="checkbox" name="tags" value="{{ $tag->id }}">
+            {{ $tag->name }}
+        @endforeach
+        <button type="submit">検索する</button>
+    </form>
     <table border="1">
         <tr>
             <th>タスクの名前</th>
