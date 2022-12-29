@@ -13,7 +13,7 @@ return new class () extends Migration {
     public function up()
     {
         Schema::create('posts', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('task_name');
             $table->text('task_description');
             $table->string('estimate_hour');
