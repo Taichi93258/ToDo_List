@@ -43,7 +43,7 @@
                                 @foreach (App\Enums\Release::cases() as $release)
                                     <input type='radio' name="release[{{ $loop_index }}][release]"
                                         value="{{ $release->value }}" @checked(old('priority', $post->release) == $release->value)>
-                                    <option>{{ $release->label() }}</option>
+                                    {{ $release->label() }}
                                 @endforeach
                             </div>
                         </td>
