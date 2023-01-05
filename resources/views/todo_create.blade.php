@@ -17,7 +17,7 @@
             タスクの説明：<input type="text" name="task_description">
         </p>
         <p>
-            担当者の名前：<input type="text" name="assign_person_name">
+            担当者の名前：<input type="text" name="assign_person_name" value="<?= auth()->user()->name ?>" readonly>
         </p>
         <p>
             見積時間(h):<input type="number" name="estimate_hour">
@@ -30,10 +30,17 @@
                 @endforeach
             </select>
         </div>
+        <div class="form-group">
+            公開設定：
+            @foreach (App\Enums\Release::cases() as $release)
+                <input type='radio' name="release" value="{{ $release->value }}" @checked(old('release', App\Enums\Release::PUBLIC->value) == $release->value)>
+                {{ $release->label() }}
+            @endforeach
+        </div>
         <div>
             タグ：
             @foreach ($tags as $tag)
-                <input type="checkbox" name="tags" value="{{ $tag->id }}">
+                <input type="checkbox" name="tags[]" value="{{ $tag->id }}">
                 {{ $tag->name }}
             @endforeach
         </div>
