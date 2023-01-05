@@ -18,10 +18,12 @@
 
 <h1>Posts List</h1>
 <div>
-    <a href="/posts/create">タスクを追加</a>
+    @auth
+        <a href="/posts/create">タスクを追加</a>
+    @endauth
     <form action="{{ route('posts.index') }}" method="GET">
         @foreach ($tags as $tag)
-            <input type="checkbox" name="tags" value="{{ $tag->id }}">
+            <input type="checkbox" name="tags[]" value="{{ $tag->id }}" multiple>
             {{ $tag->name }}
         @endforeach
         <button type="submit">検索する</button>
@@ -34,6 +36,7 @@
             <th>見積時間(h)</th>
             <th>投稿時間</th>
             <th>優先度</th>
+            <th>タグ</th>
             <th colspan="2">操作</th>
         </tr>
 
@@ -49,12 +52,18 @@
                     <td>{{ $post->estimate_hour }}</td>
                     <td>{{ $post->created_at }}</td>
                     <td>{{ App\Enums\Priority::from($post->priority)->label() }}</td>
+                    <td>
+                        @foreach ($post->tags as $tag)
+                            {{ $tag->name }}
+                        @endforeach
+                    </td>
                     @can('update', $post)
                         <td><a href="{{ route('posts.edit', ['post' => $post->id]) }}">編集</a></td>
                     @endcan
                     @can('delete', $post)
                         <td><a href="{{ route('posts.delete', ['post' => $post->id]) }}">削除</a></td>
                     @endcan
+
                 </tr>
             @endforeach
         @endisset
