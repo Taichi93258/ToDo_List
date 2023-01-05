@@ -19,6 +19,13 @@
         <p>
             優先度 :{{ App\Enums\Priority::from($post->priority)->label() }}
         </p>
+        <p>
+            タグ：
+            @foreach ($tags as $tag)
+                <input type="checkbox" name="tags[]" value="{{ $tag->id }}" @checked(old('tags', $post->tags->contains('id', $tag->id)) == $tag->id) disabled>
+                {{ $tag->name }}
+            @endforeach
+        </p>
         <input type="submit" name="delete" value="削除">
     </form>
     <a href="/">戻る</a>
