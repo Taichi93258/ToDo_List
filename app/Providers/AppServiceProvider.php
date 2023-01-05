@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Library\Estimation;
+use App\Library\GetTags;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -15,6 +16,7 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         app()->bind('Estimation', Estimation::class);
+        app()->bind('GetTags', GetTags::class);
     }
 
     /**
