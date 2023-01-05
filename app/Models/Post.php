@@ -9,7 +9,8 @@ class Post extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['release'];
+    protected $fillable = ['task_name', 'release', 'task_description',
+                        'estimate_hour', 'user_id', 'priority'];
 
     protected $guarded = ['id'];
 
@@ -24,9 +25,17 @@ class Post extends Model
         ;
     }
 
-    public function fetchPostWithUser()
+    public function fetchPostWithTags($request)
     {
-        return $this->with('user')->get();
+        $posts = $this->with('user')->get();
+
+        if (!empty($request->tags)) {
+            return  $this->whereHas('tags', function ($query) use ($request) {
+                $query->whereIn('tags.id', $request->tags);
+            })->get();
+        } else {
+            return $posts;
+        }
     }
 
     public function findLoginUser($user_id)
@@ -34,14 +43,16 @@ class Post extends Model
         return $this->where('user_id', $user_id)->get();
     }
 
-    public function savePost($request)
+    public function createPost($request)
     {
-        $this->create($request);
+        $post = $this->create($request->all());
+        $post->tags()->sync($request->tags);
     }
 
     public function updatePost($request)
     {
         $this->update($request->all());
+        $this->tags()->sync($request->tags);
     }
 
     public function deletePost()
@@ -57,12 +68,12 @@ class Post extends Model
         }
     }
 
-    public function searchTags($request)
-    {
-        $query = Post::query();
-
-        $query->whereHas(['tags' => function ($query) use ($request) {
-            $query->where('tags->id', 'like', $request);
-        }])->get();
-    }
+    // public function searchTags($request)
+    // {
+    //     if (!empty($request->tags)) {
+    //         return  $this->whereHas('tags', function ($query) use ($request) {
+    //             $query->whereIn('tags.id', $request->tags);
+    //         })->get();
+    //     }
+    // }
 }
