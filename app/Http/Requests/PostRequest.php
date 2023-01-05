@@ -33,7 +33,6 @@ class PostRequest extends FormRequest
 
     public function passedValidation()
     {
-        $request = $this->all();
-        return array_push($request, ['user_id' => auth()->id()]);
+        $this->merge(['user_id' => auth()->id()]);
     }
 }
