@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\PostRequest;
 use App\Models\Post;
-use App\Models\Tag;
 use App\Facades\FacadeEstimation;
+use App\Facades\FacadeGetTags;
 
 class PostController extends Controller
 {
@@ -17,10 +17,10 @@ class PostController extends Controller
      */
     public function index(Post $post, Request $request)
     {
-        $tags = Tag::all();
-        $posts = $post->fetchPostWithUser();
-        // $selected_tags = $post->searchTags($request);
+        $tags = FacadeGetTags::get_tags();
+        $posts = $post->fetchPostWithTags($request);
         $estimate_hour_sum = FacadeEstimation::estimate($posts);
+
 
         return view('todo_list', compact('posts', 'estimate_hour_sum', 'tags'));
     }
@@ -32,7 +32,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        $tags = Tag::all();
+        $tags = FacadeGetTags::get_tags();
         return view('todo_create', compact('tags'));
     }
 
@@ -44,9 +44,7 @@ class PostController extends Controller
      */
     public function store(PostRequest $request, Post $post)
     {
-        $post = Post::find($post->id);
-        $post->tags()->attach($request->tags);
-        $post->savePost($request);
+        $post->createPost($request);
         return redirect()->route('posts.index');
     }
 
@@ -69,7 +67,8 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         $this->authorize('edit', $post);
-        return view('todo_edit', compact('post'));
+        $tags = FacadeGetTags::get_tags();
+        return view('todo_edit', compact('post', 'tags'));
     }
 
     /**
@@ -93,8 +92,9 @@ class PostController extends Controller
      */
     public function delete(Post $post)
     {
-        $this->authorize('edit', $post);
-        return view('todo_delete', compact('post'));
+        $this->authorize('delete', $post);
+        $tags = FacadeGetTags::get_tags();
+        return view('todo_delete', compact('post', 'tags'));
     }
 
     /**
@@ -103,7 +103,7 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, Post $post)
+    public function destroy(Post $post)
     {
         $post->deletePost();
         return redirect()->route('posts.index');
