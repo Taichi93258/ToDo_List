@@ -3,8 +3,9 @@
 namespace App\Providers;
 
 use App\Library\Estimation;
-use App\Library\GetTags;
 use Illuminate\Support\ServiceProvider;
+use App\View\Components\Composer\TagComposer;
+use Illuminate\Support\Facades\View;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -16,7 +17,6 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         app()->bind('Estimation', Estimation::class);
-        app()->bind('GetTags', GetTags::class);
     }
 
     /**
@@ -26,6 +26,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        View::composer(
+            'todo.*',
+            TagComposer::class
+        );
     }
 }
