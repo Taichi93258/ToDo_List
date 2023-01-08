@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Http\Requests\PostRequest;
 use App\Models\Post;
 use App\Facades\FacadeEstimation;
-use App\Facades\FacadeGetTags;
 
 class PostController extends Controller
 {
@@ -17,12 +16,10 @@ class PostController extends Controller
      */
     public function index(Post $post, Request $request)
     {
-        $tags = FacadeGetTags::get_tags();
         $posts = $post->fetchPostWithTags($request);
         $estimate_hour_sum = FacadeEstimation::estimate($posts);
 
-
-        return view('todo_list', compact('posts', 'estimate_hour_sum', 'tags'));
+        return view('todo/list', compact('posts', 'estimate_hour_sum'));
     }
 
     /**
@@ -32,8 +29,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        $tags = FacadeGetTags::get_tags();
-        return view('todo_create', compact('tags'));
+        return view('todo/create');
     }
 
     /**
@@ -67,8 +63,7 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         $this->authorize('edit', $post);
-        $tags = FacadeGetTags::get_tags();
-        return view('todo_edit', compact('post', 'tags'));
+        return view('todo/edit', compact('post'));
     }
 
     /**
@@ -93,8 +88,7 @@ class PostController extends Controller
     public function delete(Post $post)
     {
         $this->authorize('delete', $post);
-        $tags = FacadeGetTags::get_tags();
-        return view('todo_delete', compact('post', 'tags'));
+        return view('todo/delete', compact('post'));
     }
 
     /**
@@ -112,7 +106,6 @@ class PostController extends Controller
     public function mypage(Post $post)
     {
         $posts = $post->findLoginUser(auth()->id());
-
         $estimate_hour_sum = FacadeEstimation::estimate($posts);
 
         return view('mypage', compact('posts', 'estimate_hour_sum'));
@@ -121,6 +114,7 @@ class PostController extends Controller
     public function release(Request $request, Post $post)
     {
         $post->updatePostRelease($request);
+
         return redirect()->route('posts.index');
     }
 }
