@@ -23,7 +23,7 @@
     @endauth
     <form action="{{ route('posts.index') }}" method="GET">
         @foreach ($tags as $tag)
-            <input type="checkbox" name="tags[]" value="{{ $tag->id }}" multiple @checked(is_array($select_tags) && in_array($tag->id, $select_tags))>
+            <input type="checkbox" name="tags[]" value="{{ $tag->id }}" multiple @checked(in_array($tag->id, $select_tags))>
             {{ $tag->name }}
         @endforeach
         <button type="submit">検索する</button>
