@@ -4,13 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Http\Requests\PostRequest;
 
 class Post extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['release'];
+    protected $fillable = ['task_name', 'release', 'task_description',
+                        'estimate_hour', 'user_id', 'priority'];
 
     protected $guarded = ['id'];
 
@@ -19,24 +19,38 @@ class Post extends Model
         return $this->belongsTo('App\Models\User');
     }
 
-    public function fetchPostWithUser()
+    public function tags()
     {
-        return $this->with('user')->get();
+        return $this->belongsToMany('App\Models\Tag', 'post_tag');
+        ;
     }
 
-    public function findLoginUser()
+    public function fetchPostWithTags($request)
     {
-        return $this->where('user_id', auth()->id())->get();
+        if (!empty($request->tags)) {
+            return  $this->whereHas('tags', function ($query) use ($request) {
+                $query->whereIn('tags.id', $request->tags);
+            })->get();
+        } else {
+            return $this->doesntHave('tags')->get();
+        }
     }
 
-    public function savePost($request)
+    public function findLoginUser($user_id)
     {
-        $this->create($request);
+        return $this->where('user_id', $user_id)->get();
+    }
+
+    public function createPost($request)
+    {
+        $post = $this->create($request->all());
+        $post->tags()->sync($request->tags);
     }
 
     public function updatePost($request)
     {
         $this->update($request->all());
+        $this->tags()->sync($request->tags);
     }
 
     public function deletePost()

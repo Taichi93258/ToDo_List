@@ -18,6 +18,7 @@
             <th>見積時間(h)</th>
             <th>投稿時間</th>
             <th>優先度</th>
+            <th>タグ</th>
             <th>公開設定</th>
             <th colspan="2">操作</th>
         </tr>
@@ -34,6 +35,11 @@
                         <td>{{ $post->created_at }}</td>
                         <td>{{ App\Enums\Priority::from($post->priority)->label() }}</td>
                         <td>
+                            @foreach ($post->tags as $tag)
+                                {{ $tag->name }}
+                            @endforeach
+                        </td>
+                        <td>
                             <div class="form-group">
                                 @php
                                     $loop_index = $loop->index;
@@ -42,8 +48,8 @@
                                     value="{{ $post->id }}">
                                 @foreach (App\Enums\Release::cases() as $release)
                                     <input type='radio' name="release[{{ $loop_index }}][release]"
-                                        value="{{ $release->value }}" @checked(old('priority', $post->release) == $release->value)>
-                                    <option>{{ $release->label() }}</option>
+                                        value="{{ $release->value }}" @checked(old('release', $post->release) == $release->value)>
+                                    {{ $release->label() }}
                                 @endforeach
                             </div>
                         </td>

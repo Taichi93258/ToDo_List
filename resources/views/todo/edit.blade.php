@@ -33,7 +33,16 @@
                 @endforeach
             </select>
         </div>
-        <input type="submit" name="edit" value="修正">
-    </form>
-    <a href="/">戻る</a>
+        <div>
+            タグ：
+            @foreach ($tags as $tag)
+                <input type="checkbox" name="tags[]" value="{{ $tag->id }}" @checked(old('tags', $post->tags->contains('id', $tag->id)) == $tag->id)>
+                {{ $tag->name }}
+            @endforeach
+
+        </div>
+</div>
+<input type="submit" name="edit" value="修正">
+</form>
+<a href="/">戻る</a>
 </div>

@@ -14,12 +14,13 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Post $post)
+    public function index(Post $post, Request $request)
     {
-        $posts = $post->fetchPostWithUser();
+        $posts = $post->fetchPostWithTags($request);
         $estimate_hour_sum = FacadeEstimation::estimate($posts);
+        $select_tags = is_null($request->tags) ? [] : $request->tags;
 
-        return view('todo_list', compact('posts', 'estimate_hour_sum'));
+        return view('todo/list', compact('posts', 'estimate_hour_sum', 'select_tags'));
     }
 
     /**
@@ -29,7 +30,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('todo_create');
+        return view('todo/create');
     }
 
     /**
@@ -40,8 +41,7 @@ class PostController extends Controller
      */
     public function store(PostRequest $request, Post $post)
     {
-        $post->savePost($request);
-
+        $post->createPost($request);
         return redirect()->route('posts.index');
     }
 
@@ -64,7 +64,7 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         $this->authorize('edit', $post);
-        return view('todo_edit', compact('post'));
+        return view('todo/edit', compact('post'));
     }
 
     /**
@@ -88,8 +88,8 @@ class PostController extends Controller
      */
     public function delete(Post $post)
     {
-        $this->authorize('edit', $post);
-        return view('todo_delete', compact('post'));
+        $this->authorize('delete', $post);
+        return view('todo/delete', compact('post'));
     }
 
     /**
@@ -98,7 +98,7 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, Post $post)
+    public function destroy(Post $post)
     {
         $post->deletePost();
         return redirect()->route('posts.index');
@@ -106,8 +106,7 @@ class PostController extends Controller
 
     public function mypage(Post $post)
     {
-        $posts = $post->findLoginUser();
-
+        $posts = $post->findLoginUser(auth()->id());
         $estimate_hour_sum = FacadeEstimation::estimate($posts);
 
         return view('mypage', compact('posts', 'estimate_hour_sum'));
@@ -116,6 +115,7 @@ class PostController extends Controller
     public function release(Request $request, Post $post)
     {
         $post->updatePostRelease($request);
+
         return redirect()->route('posts.index');
     }
 }

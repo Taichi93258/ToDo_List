@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Library\Estimation;
 use Illuminate\Support\ServiceProvider;
+use App\View\Components\Composer\TagComposer;
+use Illuminate\Support\Facades\View;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,6 +26,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        View::composer(
+            'todo.*',
+            TagComposer::class
+        );
     }
 }
