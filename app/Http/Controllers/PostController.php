@@ -18,7 +18,7 @@ class PostController extends Controller
     {
         $posts = $post->fetchPostWithTags($request);
         $estimate_hour_sum = FacadeEstimation::estimate($posts);
-        $select_tags = $request->tags;
+        $select_tags = $post->checkSelectTags($request);
 
         return view('todo/list', compact('posts', 'estimate_hour_sum', 'select_tags'));
     }
