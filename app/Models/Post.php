@@ -65,13 +65,4 @@ class Post extends Model
             ->update(['release' => $value['release']]);
         }
     }
-
-    public function checkSelectTags($request)
-    {
-        if ($request->tags==null) {
-            return [];
-        } else {
-            return $request->tags;
-        }
-    }
 }
