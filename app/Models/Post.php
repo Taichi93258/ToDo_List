@@ -32,7 +32,7 @@ class Post extends Model
                 $query->whereIn('tags.id', $request->tags);
             })->get();
         } else {
-            return $this->with('user')->get();
+            return $this->doesntHave('tags')->get();
         }
     }
 
@@ -66,12 +66,12 @@ class Post extends Model
         }
     }
 
-    // public function searchTags($request)
-    // {
-    //     if (!empty($request->tags)) {
-    //         return  $this->whereHas('tags', function ($query) use ($request) {
-    //             $query->whereIn('tags.id', $request->tags);
-    //         })->get();
-    //     }
-    // }
+    public function checkSelectTags($request)
+    {
+        if ($request->tags==null) {
+            return [];
+        } else {
+            return $request->tags;
+        }
+    }
 }
